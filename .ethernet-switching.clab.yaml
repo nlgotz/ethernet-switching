@@ -1,0 +1,29 @@
+name: etherswitching
+mgmt:
+  network: etherswitching
+  ipv4_subnet: 198.18.13.0/24
+topology: 
+  kinds:
+    vr-vmx:
+      image: vrnetlab/vr-vmx:18.2R1.9
+    vr-vqfx:
+      image: vrnetlab/vr-vqfx:20.2R1.10
+  nodes:
+    vqfx-1:
+      kind: vr-vqfx
+      mgmt_ipv4: 198.18.13.11
+      startup-config: cfg/vqfx-1.conf
+    vmx-1:
+      kind: vr-vmx
+      mgmt_ipv4: 198.18.13.21
+      startup-config: cfg/vmx-1.conf
+    vmx-2:
+      kind: vr-vmx
+      mgmt_ipv4: 198.18.13.22
+      startup-config: cfg/vmx-2.conf
+
+
+  links:
+      - endpoints: ["vqfx-1:eth1", "vmx-1:eth1"]
+      - endpoints: ["vqfx-1:eth2", "vmx-2:eth1"]
+
